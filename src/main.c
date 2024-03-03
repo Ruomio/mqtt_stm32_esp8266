@@ -2,25 +2,26 @@
  * @Author: PapillonAz 1065940593@q.com
  * @Date: 2023-10-25 20:56:10
  * @LastEditors: Ruomio 1065940593@qq.com
- * @LastEditTime: 2024-03-01 11:05:52
+ * @LastEditTime: 2024-03-03 11:44:05
  * @FilePath: /IWDG_demo/src/main.c
  * @Description: 由TIM2 产生PWM信号， 然后用高级定时器TIM1区捕获PWM信号
  * problem : !!!  无法从PWM输入，无法触发上升沿中断， 单独测试都没问题。
  */
-#include <stdio.h>
+// #include <stdio.h>
 #include "main.h"
 #include "systemclock.h"
 #include "gpio.h"
 #include "usart.h"
 // #include "oled.h"
 // #include "i2c.h"
-#include "sys.h"
-#include "gtim.h"
+// #include "sys.h"
+// #include "gtim.h"
 // #include "esp8266.h"
 
 
-extern char receive_buff[128];
-
+extern uint8_t receive_buff[64];
+extern UART_HandleTypeDef huart1;
+extern UART_HandleTypeDef huart2;
 
 
 int main(){
@@ -38,16 +39,19 @@ int main(){
     // MX_I2C1_Init();
     HAL_Delay(20);
     // OLED_Init();
+    // UART1 接收从串口助手来的数据，不定长
     USART1_UART_Init();
+    HAL_Delay(20);
     USART2_UART_Init();
-    // gtim_timx_pwn_chy_init(7200-1, 10000-1);
-    // UART1 接收从串口助手来的数据
-    HAL_UART_Receive_IT(&huart1, (uint8_t*)receive_buff, sizeof(receive_buff));
+
     // UART2 接收从esp8266来的数据
-    HAL_UART_Receive_IT(&huart2, (uint8_t*)receive_buff, sizeof(receive_buff));
+    HAL_UARTEx_ReceiveToIdle_IT(&huart1, receive_buff, sizeof(receive_buff));
+    HAL_UARTEx_ReceiveToIdle_IT(&huart2, receive_buff, sizeof(receive_buff));
 
-
-    printf("Program runing!\r\n");    
+    char tem[] = "Hello!\r\n";
+    HAL_UART_Transmit_IT(&huart1, (uint8_t*)tem, sizeof(tem));
+    HAL_UART_Transmit_IT(&huart2, (uint8_t*)tem, sizeof(tem));
+    // printf("Program runing!\r\n");    
     // Configure_ESP8266_MQTT();
     // printf("esp8266 configure finish!\r\n");    
     

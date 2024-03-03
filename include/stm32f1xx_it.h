@@ -2,7 +2,7 @@
  * @Author: Ruomio 1065940593@qq.com
  * @Date: 2024-02-24 10:36:03
  * @LastEditors: Ruomio 1065940593@qq.com
- * @LastEditTime: 2024-03-01 08:38:35
+ * @LastEditTime: 2024-03-02 16:39:33
  * @FilePath: /Advance_TIM_Input_Mode/include/stm32f1xx_it.h
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -48,7 +48,7 @@ void SysTick_Handler(void);
 
 void USART1_IRQHandler(void);
 void USART2_IRQHandler(void);
-void TIM1_CC_IRQHandler(void);
+// void TIM1_CC_IRQHandler(void);
 
 
 #ifdef __cplusplus

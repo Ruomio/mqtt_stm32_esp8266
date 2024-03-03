@@ -2,7 +2,7 @@
  * @Author: Ruomio 1065940593@qq.com
  * @Date: 2024-02-24 10:36:13
  * @LastEditors: Ruomio 1065940593@qq.com
- * @LastEditTime: 2024-03-01 09:17:54
+ * @LastEditTime: 2024-03-03 11:13:24
  * @FilePath: /Advance_TIM_Input_Mode/src/sys.c
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -12,6 +12,7 @@
 
 // #define OLED
 #define UART1
+#define UART2
 
 
 int _write(int file, char* ptr, int len) {
@@ -36,6 +37,16 @@ int _write(int file, char* ptr, int len) {
     }  
 
 #endif
+
+#ifdef UART2
+    for (int i = 0; i < len; i++)  
+    {  
+        while((USART2->SR&0X40)==0);//等待上一次串口数据发送完成  
+        USART2->DR = (uint8_t) ptr[i];       //写DR,串口1将发送数据
+    }  
+
+#endif
+
 
     return 0;
 }
