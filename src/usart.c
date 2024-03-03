@@ -2,7 +2,7 @@
  * @Author: PapillonAz 1065940593@q.com
  * @Date: 2023-10-25 22:34:39
  * @LastEditors: Ruomio 1065940593@qq.com
- * @LastEditTime: 2024-03-03 12:36:58
+ * @LastEditTime: 2024-03-03 15:59:42
  * @FilePath: /IWDG_demo/src/uart.c
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -129,7 +129,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     /* 串口助手 --> UART1 --> UART2 
      */
     if(huart->Instance == USART1) {
-        HAL_UART_Transmit_IT(&huart1, "UART1_Callback\r\n", sizeof("UART1_Callback\r\n"));
+        HAL_UART_Transmit_IT(&huart1, (uint8_t*)"UART1_Callback\r\n", sizeof("UART1_Callback\r\n"));
         // 接受消息回显到串口助手
         // printf("%s\r\n",receive_buff);          
 
@@ -139,7 +139,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
         HAL_UART_Receive_IT(&huart1, receive_buff, sizeof(receive_buff));
     }
     else if(huart->Instance == USART2) {
-        HAL_UART_Transmit_IT(&huart2, "UART2_Callback\r\n", sizeof("UART2_Callback\r\n"));    
+        HAL_UART_Transmit_IT(&huart2, (uint8_t*)"UART2_Callback\r\n", sizeof("UART2_Callback\r\n"));    
 
         // 接受从UART_Rx 来的信息, 后通过UART1 回显到串口助手
         // printf("%s\r\n",receive_buff);
@@ -153,23 +153,23 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
      
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
     if(huart->Instance == USART1) {
-        HAL_UART_Transmit_IT(&huart1, "UART1_Ex_Callback\r\n", sizeof("UART1_Ex_Callback\r\n"));
+        // HAL_UART_Transmit_IT(&huart1, (uint8_t*)"UART1_Ex_Callback\r\n", sizeof("UART1_Ex_Callback\r\n"));
         // printf("UART1 ExCall Back\r\n");
         // 接受消息回显到串口助手
         // printf("%s\r\n",receive_buff);          
 
         // 接受从UART1来的信息后，通过UART2将消息发送到esp8266
-        // HAL_UART_Transmit_IT(&huart2, receive_buff, Size);    
+        HAL_UART_Transmit_IT(&huart2, receive_buff, Size);    
         
         HAL_UARTEx_ReceiveToIdle_IT(&huart1, receive_buff, sizeof(receive_buff));
     }
     else if(huart->Instance == USART2) {
-        HAL_UART_Transmit_IT(&huart2, "UART2_Ex_Callback\r\n", sizeof("UART2_Ex_Callback\r\n"));
+        // HAL_UART_Transmit_IT(&huart1, (uint8_t*)"UART2_Ex_Callback\r\n", sizeof("UART2_Ex_Callback\r\n"));
         // printf("UART2 ExCall Back\r\n");      
 
         // 接受从UART_Rx 来的信息, 后通过UART1 回显到串口助手
         // printf("%s\r\n",receive_buff);
-        // HAL_UART_Transmit_IT(&huart1, receive_buff, Size);
+        HAL_UART_Transmit_IT(&huart1, receive_buff, Size);
 
         
         HAL_UARTEx_ReceiveToIdle_IT(&huart2, receive_buff, sizeof(receive_buff));
