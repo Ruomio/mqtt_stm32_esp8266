@@ -2,7 +2,7 @@
  * @Author: Ruomio 1065940593@qq.com
  * @Date: 2024-02-24 10:36:13
  * @LastEditors: Ruomio 1065940593@qq.com
- * @LastEditTime: 2024-03-03 11:13:24
+ * @LastEditTime: 2024-03-03 22:39:09
  * @FilePath: /Advance_TIM_Input_Mode/src/sys.c
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -12,7 +12,7 @@
 
 // #define OLED
 #define UART1
-#define UART2
+// #define UART2
 
 
 int _write(int file, char* ptr, int len) {
