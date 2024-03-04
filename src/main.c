@@ -2,7 +2,7 @@
  * @Author: PapillonAz 1065940593@q.com
  * @Date: 2023-10-25 20:56:10
  * @LastEditors: Ruomio 1065940593@qq.com
- * @LastEditTime: 2024-03-04 15:49:38
+ * @LastEditTime: 2024-03-04 18:08:28
  * @FilePath: /IWDG_demo/src/main.c
  * @Description: 由TIM2 产生PWM信号， 然后用高级定时器TIM1区捕获PWM信号
  * problem : !!!  无法从PWM输入，无法触发上升沿中断， 单独测试都没问题。
@@ -15,7 +15,7 @@
 // #include "oled.h"
 // #include "i2c.h"
 #include "sys.h"
-// #include "gtim.h"
+#include "gtim.h"
 #include "esp8266.h"
 
 
@@ -37,6 +37,7 @@ int main(){
     // 外设
     GPIO_Init();
     // MX_I2C1_Init();
+    gtim_timx_pwn_chy_init(7200-1, 200-1);
     HAL_Delay(20);
     // OLED_Init();
     // UART1 接收从串口助手来的数据，不定长

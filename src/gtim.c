@@ -2,7 +2,7 @@
  * @Author: Ruomio 1065940593@qq.com
  * @Date: 2024-02-24 10:36:13
  * @LastEditors: Ruomio 1065940593@qq.com
- * @LastEditTime: 2024-02-25 14:34:26
+ * @LastEditTime: 2024-03-04 18:07:17
  * @FilePath: /Advance_TIM_Input_Mode/src/gtim.c
  * @Description: 通用定时器TIM3 CH1 --> PA6
  *               通用定时器TIM2 CH2 --> PA1
@@ -24,7 +24,7 @@ void gtim_timx_pwn_chy_init(uint16_t psc, uint16_t arr) {
 
     TIM_OC_InitTypeDef timx_oc_pwn_chy = {0};
     timx_oc_pwn_chy.OCMode = TIM_OCMODE_PWM1;
-    timx_oc_pwn_chy.Pulse = arr/2;                      // 脉宽
+    timx_oc_pwn_chy.Pulse = 12;                      // 脉宽
     timx_oc_pwn_chy.OCPolarity = TIM_OCPOLARITY_HIGH;    // 当定时器计数值小于CCR1_Val时为高电平
     HAL_TIM_PWM_ConfigChannel(&g_timx_pwm_chy_handle, &timx_oc_pwn_chy, TIM_CHANNEL_2);
     HAL_TIM_PWM_Start(&g_timx_pwm_chy_handle, TIM_CHANNEL_2);
