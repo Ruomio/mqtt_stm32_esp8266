@@ -2,7 +2,7 @@
  * @Author: PapillonAz 1065940593@q.com
  * @Date: 2023-10-25 20:56:10
  * @LastEditors: Ruomio 1065940593@qq.com
- * @LastEditTime: 2024-03-03 11:44:05
+ * @LastEditTime: 2024-03-04 15:49:38
  * @FilePath: /IWDG_demo/src/main.c
  * @Description: 由TIM2 产生PWM信号， 然后用高级定时器TIM1区捕获PWM信号
  * problem : !!!  无法从PWM输入，无法触发上升沿中断， 单独测试都没问题。
@@ -14,14 +14,14 @@
 #include "usart.h"
 // #include "oled.h"
 // #include "i2c.h"
-// #include "sys.h"
+#include "sys.h"
 // #include "gtim.h"
-// #include "esp8266.h"
+#include "esp8266.h"
 
 
-extern uint8_t receive_buff[64];
-extern UART_HandleTypeDef huart1;
-extern UART_HandleTypeDef huart2;
+// extern uint8_t receive_buff[128];
+// extern UART_HandleTypeDef huart1;
+// extern UART_HandleTypeDef huart2;
 
 
 int main(){
@@ -50,16 +50,23 @@ int main(){
 
     char tem[] = "Hello!\r\n";
     HAL_UART_Transmit_IT(&huart1, (uint8_t*)tem, sizeof(tem));
-    HAL_UART_Transmit_IT(&huart2, (uint8_t*)tem, sizeof(tem));
+    // HAL_UART_Transmit_IT(&huart2, (uint8_t*)tem, sizeof(tem));
     // printf("Program runing!\r\n");    
     // Configure_ESP8266_MQTT();
     // printf("esp8266 configure finish!\r\n");    
-    
+    HAL_Delay(1000);
+    uint8_t res =  Configure_ESP8266_MQTT();
+    res ? printf("The error code is %d!\r\n", res) : 0;
+
+    // Subscribe_Topic("door_lock/test_sub", Qos1);
+
     while(1){
         HAL_Delay(100);
-        if(cnt++ > 10) {
+        if(cnt++ > 100) {
             HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
             // publishData("door_lock/test","Hello_Test");
+            // publishData("door_lock/test_sub","test_sub_receive", Qos1);
+
         }
         
     }

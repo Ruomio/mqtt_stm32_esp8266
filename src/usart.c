@@ -2,7 +2,7 @@
  * @Author: PapillonAz 1065940593@q.com
  * @Date: 2023-10-25 22:34:39
  * @LastEditors: Ruomio 1065940593@qq.com
- * @LastEditTime: 2024-03-03 15:59:42
+ * @LastEditTime: 2024-03-04 15:14:46
  * @FilePath: /IWDG_demo/src/uart.c
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -14,7 +14,7 @@
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 
-uint8_t receive_buff[64];
+uint8_t receive_buff[128];
 uint8_t receive_flga;
 
 void USART1_UART_Init(void){
