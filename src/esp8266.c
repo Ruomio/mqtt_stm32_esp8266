@@ -2,7 +2,7 @@
  * @Author: Ruomio 1065940593@qq.com
  * @Date: 2024-02-29 10:23:35
  * @LastEditors: Ruomio 1065940593@qq.com
- * @LastEditTime: 2024-03-04 15:46:42
+ * @LastEditTime: 2024-03-05 23:50:15
  * @FilePath: /Mqtt_stm32_esp8266/src/esp8266.c
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -21,6 +21,10 @@
  */
 uint8_t Configure_ESP8266_MQTT()
 {
+
+    HAL_UART_Transmit_IT(&huart2, (uint8_t*)"AT+RST\r\n", sizeof("AT+RST=1\r\n"));
+    HAL_Delay(4000);
+
     uint8_t cnt = 0;
     do {
         cnt++;
@@ -49,7 +53,7 @@ uint8_t Configure_ESP8266_MQTT()
  
     // 先关闭连接，重新配置
     // 关闭连接  AT+MQTTCLEAN=0
-    cnt = 0;
+/*     cnt = 0;
     do {
         cnt++;
         if( cnt >8) {
@@ -57,7 +61,7 @@ uint8_t Configure_ESP8266_MQTT()
         }
         HAL_UART_Transmit_IT(&huart2, (uint8_t*)"AT+MQTTCLEAN=0\r\n", sizeof("AT+MQTTCLEAN=0\r\n"));
         HAL_Delay(5000);
-    }while(strstr((char*)receive_buff,"OK") == NULL);
+    }while(strstr((char*)receive_buff,"OK") == NULL); */
  
  
     // MQTT 发布者属性
